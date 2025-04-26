@@ -1,64 +1,64 @@
-  import { useEffect, useState } from "react";
-  import { ScrollView, View, ActivityIndicator, Text } from "react-native";
-  import PokemonCard from "@/components/PokemonCard";
-  import type { ViewStyle } from "react-native";
+import React from 'react';
+import { View, ActivityIndicator, Text, FlatList, TouchableOpacity } from "react-native";
+import PokemonCard from "@/components/PokemonCard";
+import { useFetchPokemons } from "@/hooks/useFetchPokemons";
+import tw from 'twrnc'; // ✅ Import twrnc
 
-  export default function Index() {
-    const [pokemonList, setPokemonList] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+export default function Index() {
+  const { pokemonList, loading } = useFetchPokemons();
+  const flatListRef = React.useRef<FlatList>(null); // Khai báo reference cho FlatList
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const res = await fetch("https://pokemon-dictionary-be-production.up.railway.app/pokemons");
-          const data = await res.json();
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true }); // Cuộn lên trên cùng
+  };
 
-          const list = Array.isArray(data.pokemons) ? data.pokemons :
-                      Array.isArray(data) ? data : [];
+  const scrollToEnd = () => {
+    flatListRef.current?.scrollToEnd({ animated: true }); // Cuộn xuống cuối
+  };
 
-          setPokemonList(list);
-        } catch (err) {
-          console.error("Fetch error:", err);
-          setPokemonList([]);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchData();
-    }, []);
-
-    if (loading) {
-      return (
-        <View style={styles.center}>
-          <ActivityIndicator size="large" />
-          <Text>Đang tải dữ liệu Pokémon...</Text>
-        </View>
-      );
-    }
-
-    if (pokemonList.length === 0) {
-      return (
-        <View style={styles.center}>
-          <Text>Không có Pokémon nào để hiển thị.</Text>
-        </View>
-      );
-    }
-
+  if (loading) {
     return (
-      <ScrollView contentContainerStyle={{ padding: 10 }}>
-        {pokemonList.map((pokemon) => (
-          <PokemonCard key={pokemon.id} pokemon={pokemon} />
-        ))}
-      </ScrollView>
+      <View style={tw`flex-1 justify-center items-center p-4`}>
+        <ActivityIndicator size="large" />
+        <Text>Đang tải dữ liệu Pokémon...</Text>
+      </View>
     );
   }
 
-  const styles: { center: ViewStyle } = {
-    center: {
-      flex: 1,
-      justifyContent: "center",  // OK
-      alignItems: "center",      // OK
-      padding: 16,
-    },
-  };
+  if (pokemonList.length === 0) {
+    return (
+      <View style={tw`flex-1 justify-center items-center p-4`}>
+        <Text>Không có Pokémon nào để hiển thị.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={tw`flex-1`}>
+      {/* Các nút cuộn */}
+      <View style={tw`absolute top-4 left-4`}>
+        <TouchableOpacity onPress={scrollToTop}>
+          <Text style={tw`text-lg font-bold`}>↑</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={tw`absolute bottom-4 left-4`}>
+        <TouchableOpacity onPress={scrollToEnd}>
+          <Text style={tw`text-lg font-bold`}>↓</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* FlatList */}
+      <FlatList
+        ref={flatListRef} // Tham chiếu FlatList
+        data={pokemonList}
+        renderItem={({ item }) => <PokemonCard pokemon={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={tw`p-2`} // Áp dụng tailwind vào padding
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        removeClippedSubviews={true}
+      />
+    </View>
+  );
+}

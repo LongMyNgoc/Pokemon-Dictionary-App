@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# Pokémon Dictionary
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Pokémon Dictionary** là một ứng dụng di động giúp người dùng tìm kiếm và xem thông tin chi tiết về các Pokémon, bao gồm tên, loại, hình ảnh và nhiều thông tin thú vị khác.
 
-## Get started
+## Giới Thiệu
+Ứng dụng được xây dựng bằng **React Native** và **Expo**, sử dụng API từ **PokeAPI** để lấy dữ liệu về các Pokémon. Bạn có thể dễ dàng duyệt qua danh sách các Pokémon, tìm kiếm thông tin chi tiết về từng Pokémon, bao gồm ID, tên, loại và hình ảnh.
 
-1. Install dependencies
+## Các tính năng
+- Hiển thị danh sách tất cả các Pokémon.
+- Cung cấp thông tin chi tiết về từng Pokémon, bao gồm: ID, tên, loại và hình ảnh.
+- Tải dữ liệu tự động và hiển thị thông báo khi dữ liệu đang được tải.
+- Giao diện người dùng thân thiện và dễ sử dụng.
 
-   ```bash
-   npm install
-   ```
+## Công Nghệ Sử Dụng
+- **React Native**: Một framework mã nguồn mở cho phép phát triển ứng dụng di động sử dụng JavaScript và React. Giúp tạo ứng dụng cho cả Android và iOS từ một codebase chung.
+- **Expo**: Expo là một công cụ phát triển giúp đơn giản hóa quá trình phát triển ứng dụng React Native mà không cần cấu hình phức tạp như Android Studio hay Xcode.
+- **twrnc**: Thư viện tích hợp Tailwind CSS cho React Native, giúp sử dụng các lớp Tailwind trực tiếp trong các component React Native, làm cho mã nguồn gọn gàng và dễ quản lý hơn.
 
-2. Start the app
+## Yêu Cầu Hệ Thống
+Trước khi bắt đầu, bạn cần cài đặt phiên bản **NodeJS >= 22** (hoặc phiên bản tương thích) trên hệ thống của mình.
 
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Cài đặt
+1. Cài đặt các phụ thuộc
+Để cài đặt các phụ thuộc cho dự án, bạn cần chạy lệnh sau:
 
 ```bash
-npm run reset-project
+npm install
 ```
+2. Chạy ứng dụng
+Để chạy ứng dụng trên thiết bị hoặc trình giả lập, bạn sử dụng lệnh:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```bash
+npx expo start
+```
+Sau khi lệnh trên chạy, bạn có thể mở ứng dụng trong Expo Go trên thiết bị của mình, hoặc mở trên giả lập Android hoặc iOS.
 
-## Learn more
+3. Kiểm tra ứng dụng
+Ứng dụng sẽ tự động tải danh sách Pokémon từ API và hiển thị chúng trong một danh sách. Mỗi Pokémon được hiển thị trong một thẻ với các thông tin chi tiết như ID, tên và loại.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Tài nguyên
+- Tài liệu Expo: https://docs.expo.dev/ - Học cách phát triển ứng dụng với Expo.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- PokeAPI: https://pokeapi.co/ - API để lấy dữ liệu về các Pokémon.
 
-## Join the community
+## Ghi chú
+- Ứng dụng đang sử dụng API miễn phí từ Railway.app, vì vậy có thể gặp tình trạng tạm ngưng dịch vụ nếu hết hạn.
+- Để trải nghiệm ứng dụng mượt mà, khuyến nghị sử dụng Expo Go trên thiết bị di động thực tế.
 
-Join our community of developers creating universal apps.
+## Liên kết hệ thống
+- **Back-End (GitHub)**: https://github.com/LongMyNgoc/Pokemon-Dictionary-BE.git
+- **Back-End (Railway)**: https://pokemon-dictionary-be-production.up.railway.app/
+- **Front-End (GitHub)**: https://github.com/LongMyNgoc/Pokemon-Dictionary-App.git
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Đóng góp & Phát triển
+Chúng tôi luôn chào đón sự đóng góp từ cộng đồng! Nếu bạn có bất kỳ ý tưởng, cải tiến hoặc báo lỗi nào, vui lòng gửi qua hệ thống quản lý mã nguồn của dự án. Bạn cũng có thể liên hệ trực tiếp với nhóm phát triển để thảo luận thêm.
+
+## Thông tin liên hệ
+📧 Email: nguyenphilong.dev@gmail.com 
+🌐 Portfolio: https://nguyenphilongportfolio.vercel.app/

@@ -1,4 +1,6 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, Image } from 'react-native';
+import tw from 'twrnc';  // Import twrnc để sử dụng các lớp tailwind
 
 type PokemonProps = {
   pokemon: {
@@ -11,14 +13,14 @@ type PokemonProps = {
 
 export default function PokemonCard({ pokemon }: PokemonProps) {
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: pokemon.image_url }} style={styles.image} />
-      <View style={styles.info}>
-        <Text style={styles.name}>
+    <View style={tw`flex-row bg-gray-100 p-4 mb-2 rounded-lg shadow-md`}>
+      <Image source={{ uri: pokemon.image_url }} style={tw`w-16 h-16 mr-4`} />
+      <View style={tw`flex-1`}>
+        <Text style={tw`text-lg font-bold`}>
           #{pokemon.id} {capitalize(pokemon.name)}
         </Text>
-        <Text style={styles.types}>
-          {pokemon.types.map((type) => capitalize(type)).join(" / ")}
+        <Text style={tw`text-sm text-gray-600`}>
+          {pokemon.types.map((type) => capitalize(type)).join(' / ')}
         </Text>
       </View>
     </View>
@@ -28,34 +30,3 @@ export default function PokemonCard({ pokemon }: PokemonProps) {
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#f2f2f2",
-    padding: 12,
-    marginBottom: 10,
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  image: {
-    width: 70,
-    height: 70,
-    marginRight: 12,
-  },
-  info: {
-    flex: 1,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  types: {
-    fontSize: 14,
-    color: "#666",
-  },
-});
