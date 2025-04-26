@@ -1,13 +1,32 @@
-import React, { useRef } from 'react';
-import { View, ActivityIndicator, Text, FlatList } from "react-native";
-import PokemonCard from "@/components/PokemonCard/PokemonCard";
-import ScrollButtons from "@/components/PokemonList/ScrollButtons"; // ✅ thêm dòng này
-import { useFetchPokemons } from "@/hooks/useFetchPokemons";
+import React, { useRef, useState } from 'react';
+import { View, FlatList } from 'react-native';
+import PokemonCard from '@/components/PokemonCard/PokemonCard';
+import ScrollButtons from '@/components/PokemonList/ScrollButtons';
+import { useFetchPokemons } from '@/hooks/useFetchPokemons';
+import SearchBar from '@/components/SearchBar/SearchBar';
+import LoadingScreen from '@/components/Loading/LoadingScreen';
+import EmptyState from '@/components/Loading/EmptyState';
+import Filter from '@/components/Filter/Filter';
 import tw from 'twrnc';
 
 export default function PokemonListScreen() {
   const { pokemonList, loading } = useFetchPokemons();
   const flatListRef = useRef<FlatList>(null);
+  const [searchText, setSearchText] = useState('');
+  
+  // Các state cho việc lọc
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedGeneration, setSelectedGeneration] = useState('');
+
+  const filterPokemons = () => {
+    return pokemonList.filter((pokemon) => {
+      const matchesType = selectedType === 'All' || pokemon.types.includes(selectedType);
+      const matchesGeneration = selectedGeneration === 'All' || pokemon.generation === selectedGeneration;
+      const matchesSearch = pokemon.name.toLowerCase().includes(searchText.toLowerCase());
+
+      return matchesSearch && matchesType && matchesGeneration;
+    });
+  };
 
   const scrollToTop = () => {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
@@ -17,35 +36,45 @@ export default function PokemonListScreen() {
     flatListRef.current?.scrollToEnd({ animated: true });
   };
 
+  const handlePress = (pokemonId: number) => {
+    console.log(`Pokemon with ID: ${pokemonId} clicked`);
+  };
+
   if (loading) {
-    return (
-      <View style={tw`flex-1 justify-center items-center p-4 bg-blue-50`}>
-        <ActivityIndicator size="large" color="#4F46E5" />
-        <Text style={tw`text-2xl font-bold text-blue-700 mt-4 text-center`}>Đang tải dữ liệu Pokémon...</Text>
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
-  if (pokemonList.length === 0) {
-    return (
-      <View style={tw`flex-1 justify-center items-center p-4 bg-red-50`}>
-        <Text style={tw`text-2xl font-bold text-red-700 mt-4 text-center`}>
-          Không có Pokemon nào để hiển thị.
-        </Text>
-      </View>
-    );
-  }
+  const filteredPokemons = filterPokemons();
 
   return (
     <View style={tw`flex-1`}>
-      <FlatList
-        ref={flatListRef}
-        data={pokemonList}
-        renderItem={({ item }) => <PokemonCard pokemon={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={tw`p-2 pb-20`}
-        showsVerticalScrollIndicator={true}
+      <SearchBar searchText={searchText} setSearchText={setSearchText}/>
+      {/* Hiển thị Filter */}
+      <Filter
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
+        selectedGeneration={selectedGeneration}
+        setSelectedGeneration={setSelectedGeneration}
       />
+      
+      {/* Nếu không có Pokémon nào */}
+      {pokemonList.length === 0 || filteredPokemons.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={filteredPokemons}
+          renderItem={({ item }) => (
+            <PokemonCard
+              pokemon={item}
+              onPress={() => handlePress(item.id)}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={tw`p-2 pb-20`}
+          showsVerticalScrollIndicator={true}
+        />
+      )}
 
       {/* ScrollButtons component */}
       <ScrollButtons onScrollToTop={scrollToTop} onScrollToEnd={scrollToEnd} />
