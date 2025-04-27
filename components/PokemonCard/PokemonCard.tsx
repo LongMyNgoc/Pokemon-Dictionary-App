@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import { getTypeColor } from '@/utils/typeColors';
+import { capitalize } from '@/utils/Capitalize';
 
 type PokemonProps = {
   pokemon: {
@@ -29,7 +30,7 @@ export default function PokemonCard({ pokemon, onPress }: PokemonProps) {
               <View
                 key={index}
                 style={[tw`px-2 py-1 rounded-full mr-2 mb-2`, { backgroundColor: typeColor }]}>
-                <Text style={tw`text-white text-sm`}>{capitalize(String(type))}</Text>
+                <Text style={tw`text-white text-sm font-bold`}>{capitalize(String(type))}</Text>
               </View>
             );
           })}
@@ -37,9 +38,4 @@ export default function PokemonCard({ pokemon, onPress }: PokemonProps) {
       </View>
     </TouchableOpacity>
   );
-}
-
-function capitalize(str: string) {
-  if (!str) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }

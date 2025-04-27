@@ -1,63 +1,68 @@
+// components/Filter.tsx
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import FilterModal from './FilterModal';
+import { capitalize } from '@/utils/Capitalize';
+import { getTypeColor } from '@/utils/typeColors';
 
-interface FilterProps {
+type FilterProps = {
   selectedType: string;
-  setSelectedType: (type: string) => void;
   selectedGeneration: string;
-  setSelectedGeneration: (generation: string) => void;
-}
+  onTypeChange: (type: string) => void;
+  onGenerationChange: (generation: string) => void;
+};
 
-const Filter: React.FC<FilterProps> = ({
-  selectedType,
-  setSelectedType,
-  selectedGeneration,
-  setSelectedGeneration,
-}) => {
-  const [typeModalVisible, setTypeModalVisible] = useState(false);
-  const [generationModalVisible, setGenerationModalVisible] = useState(false);
+const Filter: React.FC<FilterProps> = ({ selectedType, selectedGeneration, onTypeChange, onGenerationChange }) => {
+  const [isTypeModalVisible, setIsTypeModalVisible] = useState(false);
+  const [isGenerationModalVisible, setIsGenerationModalVisible] = useState(false);
+
+  // Các lựa chọn cho Type và Generation
+  const typeOptions = ['All', 'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'];
+  const generationOptions = ['All', 'Gen 1', 'Gen 2', 'Gen 3', 'Gen 4', 'Gen 5', 'Gen 6', 'Gen 7', 'Gen 8', 'Gen 9'];
+
+  const backgroundColor = getTypeColor(selectedType);
 
   return (
-    <View style={tw`p-4 bg-white rounded-lg shadow-lg mb-4`}>
-
-      <View style={tw`flex-row justify-between`}>
-        <View style={tw`flex-1 mr-2`}>
-          <Text style={tw`text-sm font-medium text-gray-700 mb-2 text-center`}>Type</Text>
-          <TouchableOpacity
-            style={tw`p-2 bg-gray-100 border border-gray-300 rounded-lg`} // Reduce padding here
-            onPress={() => setTypeModalVisible(true)}
-          >
-            <Text style={tw`text-base`}>{selectedType || 'All'}</Text> {/* Reduce font size here */}
-          </TouchableOpacity>
-        </View>
-
-        <View style={tw`flex-1 ml-2`}>
-          <Text style={tw`text-sm font-medium text-gray-700 mb-2 text-center`}>Generation</Text>
-          <TouchableOpacity
-            style={tw`p-2 bg-gray-100 border border-gray-300 rounded-lg`} // Reduce padding here
-            onPress={() => setGenerationModalVisible(true)}
-          >
-            <Text style={tw`text-base`}>{selectedGeneration || 'All'}</Text> {/* Reduce font size here */}
-          </TouchableOpacity>
-        </View>
+    <View style={tw`flex-row justify-between p-2`}>
+      {/* Lọc theo loại */}
+      <View style={tw`flex-1 mr-2`}>
+        <Text style={[tw`text-lg`, { fontWeight: 'bold', color: 'white', textAlign: 'center' }]}>Type</Text>
+        <TouchableOpacity
+          style={[tw`bg-gray-300 p-2 rounded-lg`, { backgroundColor }]}
+          onPress={() => setIsTypeModalVisible(true)}
+        >
+          <Text style={tw`text-sm font-bold`}>{capitalize(String(selectedType))}</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Type Modal */}
+      {/* Lọc theo thế hệ */}
+      <View style={tw`flex-1 ml-2`}>
+        <Text style={[tw`text-lg`, { fontWeight: 'bold', color: 'white', textAlign: 'center' }]}>Generation</Text>
+        <TouchableOpacity
+          style={[tw`bg-gray-300 p-2 rounded-lg`, { backgroundColor }]}
+          onPress={() => setIsGenerationModalVisible(true)}
+        >
+          <Text style={tw`text-sm font-bold`}>{selectedGeneration}</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Modal cho lọc loại */}
       <FilterModal
-        visible={typeModalVisible}
-        data={['All', 'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy']}
-        onSelect={setSelectedType}
-        onClose={() => setTypeModalVisible(false)}
+        visible={isTypeModalVisible}
+        onClose={() => setIsTypeModalVisible(false)}
+        title="Select Type"
+        options={typeOptions}
+        onSelect={(value) => onTypeChange(value)}
       />
 
-      {/* Generation Modal */}
+      {/* Modal cho lọc thế hệ */}
       <FilterModal
-        visible={generationModalVisible}
-        data={['All', 'Gen 1', 'Gen 2', 'Gen 3', 'Gen 4', 'Gen 5', 'Gen 6', 'Gen 7', 'Gen 8', 'Gen 9']}
-        onSelect={setSelectedGeneration}
-        onClose={() => setGenerationModalVisible(false)}
+        visible={isGenerationModalVisible}
+        onClose={() => setIsGenerationModalVisible(false)}
+        title="Select Generation"
+        options={generationOptions}
+        onSelect={(value) => onGenerationChange(value)}
       />
     </View>
   );

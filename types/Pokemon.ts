@@ -16,7 +16,7 @@ export const getGenerationFromId = (id: number): string => {
   if (id >= 494 && id <= 649) return "Gen 5";
   if (id >= 650 && id <= 721) return "Gen 6";
   if (id >= 722 && id <= 809) return "Gen 7";
-  if (id >= 810 && id <= 898) return "Gen 8";
-  if (id >= 899 && id <= 1025) return "Gen 9";
+  if (id >= 810 && id <= 905) return "Gen 8";
+  if (id >= 906 && id <= 1025) return "Gen 9";
   return "Unknown Gen"; // Trường hợp không thuộc bất kỳ thế hệ nào
 };

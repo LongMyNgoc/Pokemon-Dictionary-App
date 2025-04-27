@@ -1,42 +1,37 @@
-// FilterModal.tsx
+// components/FilterModal.tsx
 import React from 'react';
-import { View, Text, Modal, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Modal, ScrollView } from 'react-native';
 import tw from 'twrnc';
 
-interface FilterModalProps {
+type FilterModalProps = {
   visible: boolean;
-  data: string[];
-  onSelect: (value: string) => void;
   onClose: () => void;
-}
+  title: string;
+  options: string[];
+  onSelect: (value: string) => void;
+};
 
-const FilterModal: React.FC<FilterModalProps> = ({ visible, data, onSelect, onClose }) => {
-  const renderItem = (item: string) => (
-    <TouchableOpacity
-      style={tw`p-4 border-b border-gray-200`}
-      onPress={() => {
-        onSelect(item);
-        onClose(); // Đóng modal sau khi chọn item
-      }}
-    >
-      <Text style={tw`text-lg`}>{item}</Text>
-    </TouchableOpacity>
-  );
-
+const FilterModal: React.FC<FilterModalProps> = ({ visible, onClose, title, options, onSelect }) => {
   return (
     <Modal
       visible={visible}
       animationType="slide"
-      transparent={true}
       onRequestClose={onClose}
+      transparent={true}
     >
-      <View style={tw`flex-1 justify-end bg-black opacity-50`} onTouchEnd={onClose} />
-      <View style={tw`bg-white p-4 rounded-t-lg`}>
-        <FlatList
-          data={data}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => renderItem(item)}
-        />
+      <View style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
+        <View style={tw`w-3/4 bg-white p-4 rounded-lg`}>
+          <Text style={[tw`text-lg mb-4`, { fontWeight: 'bold', color: '#333' }]}>{title}</Text>
+
+          {/* Thêm ScrollView để có thể cuộn danh sách */}
+          <ScrollView style={tw`max-h-60`}>
+            {options.map((option, index) => (
+              <Button key={index} title={option} onPress={() => { onSelect(option); onClose(); }} />
+            ))}
+          </ScrollView>
+
+          <Button title="Close" onPress={onClose} />
+        </View>
       </View>
     </Modal>
   );

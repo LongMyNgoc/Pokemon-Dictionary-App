@@ -17,6 +17,7 @@ export const getTypeColor = (type: string) => {
       case 'dragon': return '#7038F8';
       case 'steel': return '#B8B8D0';
       case 'fairy': return '#EE99AC';
-      default: return '#A8A878'; // Màu xám mặc định cho các loại khác
+      case 'normal': return '#A8A878';
+      default: return '#FFFFFF'; // Màu xám mặc định cho các loại khác
   }
 };

@@ -6,7 +6,7 @@ import { useFetchPokemons } from '@/hooks/useFetchPokemons';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import LoadingScreen from '@/components/Loading/LoadingScreen';
 import EmptyState from '@/components/Loading/EmptyState';
-import Filter from '@/components/Filter/Filter';
+import Filter from '@/components/Filter/Filter'; // Import component Filter
 import tw from 'twrnc';
 
 export default function PokemonListScreen() {
@@ -15,9 +15,10 @@ export default function PokemonListScreen() {
   const [searchText, setSearchText] = useState('');
   
   // Các state cho việc lọc
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedGeneration, setSelectedGeneration] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [selectedGeneration, setSelectedGeneration] = useState('All');
 
+  // Hàm lọc Pokémon
   const filterPokemons = () => {
     return pokemonList.filter((pokemon) => {
       const matchesType = selectedType === 'All' || pokemon.types.includes(selectedType);
@@ -48,15 +49,16 @@ export default function PokemonListScreen() {
 
   return (
     <View style={tw`flex-1`}>
-      <SearchBar searchText={searchText} setSearchText={setSearchText}/>
-      {/* Hiển thị Filter */}
+      <SearchBar searchText={searchText} setSearchText={setSearchText} />
+      
+      {/* Sử dụng Filter component */}
       <Filter
         selectedType={selectedType}
-        setSelectedType={setSelectedType}
         selectedGeneration={selectedGeneration}
-        setSelectedGeneration={setSelectedGeneration}
+        onTypeChange={setSelectedType}
+        onGenerationChange={setSelectedGeneration}
       />
-      
+
       {/* Nếu không có Pokémon nào */}
       {pokemonList.length === 0 || filteredPokemons.length === 0 ? (
         <EmptyState />
