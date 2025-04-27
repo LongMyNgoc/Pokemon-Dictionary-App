@@ -1,19 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { View, FlatList } from 'react-native';
-import PokemonCard from '@/components/PokemonCard/PokemonCard';
 import ScrollButtons from '@/components/PokemonList/ScrollButtons';
 import { useFetchPokemons } from '@/hooks/useFetchPokemons';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import LoadingScreen from '@/components/Loading/LoadingScreen';
-import EmptyState from '@/components/Loading/EmptyState';
+import PokemonList from './PokemonList';
 import Filter from '@/components/Filter/Filter'; // Import component Filter
+import Title from '@/components/Title/Title';
 import tw from 'twrnc';
 
 export default function PokemonListScreen() {
   const { pokemonList, loading } = useFetchPokemons();
   const flatListRef = useRef<FlatList>(null);
   const [searchText, setSearchText] = useState('');
-  
+
   // Các state cho việc lọc
   const [selectedType, setSelectedType] = useState('All');
   const [selectedGeneration, setSelectedGeneration] = useState('All');
@@ -49,8 +49,8 @@ export default function PokemonListScreen() {
 
   return (
     <View style={tw`flex-1`}>
+      <Title />
       <SearchBar searchText={searchText} setSearchText={setSearchText} />
-      
       {/* Sử dụng Filter component */}
       <Filter
         selectedType={selectedType}
@@ -59,24 +59,11 @@ export default function PokemonListScreen() {
         onGenerationChange={setSelectedGeneration}
       />
 
-      {/* Nếu không có Pokémon nào */}
-      {pokemonList.length === 0 || filteredPokemons.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <FlatList
-          ref={flatListRef}
-          data={filteredPokemons}
-          renderItem={({ item }) => (
-            <PokemonCard
-              pokemon={item}
-              onPress={() => handlePress(item.id)}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={tw`p-2 pb-20`}
-          showsVerticalScrollIndicator={true}
-        />
-      )}
+      <PokemonList
+        pokemons={filteredPokemons}
+        onPress={handlePress}
+        flatListRef={flatListRef}
+      />
 
       {/* ScrollButtons component */}
       <ScrollButtons onScrollToTop={scrollToTop} onScrollToEnd={scrollToEnd} />
