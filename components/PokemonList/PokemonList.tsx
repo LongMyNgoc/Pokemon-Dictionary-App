@@ -9,7 +9,7 @@ import { Pokemon } from '@/types/Pokemon'; // (Giả sử bạn đã có type Po
 interface PokemonListProps {
   pokemons: Pokemon[];
   onPress: (pokemonId: number) => void;
-  flatListRef: React.RefObject<FlatList<any>>;
+  flatListRef: React.RefObject<FlatList<Pokemon>>;
 }
 
 export default function PokemonList({ pokemons, onPress, flatListRef }: PokemonListProps) {

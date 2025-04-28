@@ -3,15 +3,10 @@ import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-nati
 import tw from 'twrnc';
 import { getTypeColor } from '@/utils/typeColors';
 import { capitalize } from '@/utils/Capitalize';
+import { Pokemon } from '@/types/Pokemon';
 
 type PokemonProps = {
-  pokemon: {
-    id: number;
-    name: string;
-    generation?: string;
-    image_url: string;
-    types: string[];
-  };
+  pokemon: Pokemon;
   onPress: () => void;
 };
 
