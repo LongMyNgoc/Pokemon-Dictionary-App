@@ -5,7 +5,11 @@ export default function RootLayout() {
     <Stack>
       <Stack.Screen 
         name="index" 
-        options={{ headerShown: false }} // Ẩn header
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="PokemonDetail" 
+        options={{ headerShown: false }}
       />
     </Stack>
   );

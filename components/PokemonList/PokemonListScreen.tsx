@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, FlatList } from 'react-native';
+import { useRouter } from 'expo-router';
 import ScrollButtons from '@/components/PokemonList/ScrollButtons';
 import { useFetchPokemons } from '@/hooks/useFetchPokemons';
 import SearchBar from '@/components/SearchBar/SearchBar';
@@ -13,6 +14,8 @@ export default function PokemonListScreen() {
   const { pokemonList, loading } = useFetchPokemons();
   const flatListRef = useRef<FlatList>(null);
   const [searchText, setSearchText] = useState('');
+
+  const router = useRouter(); // hook router
 
   // Các state cho việc lọc
   const [selectedType, setSelectedType] = useState('All');
@@ -38,7 +41,7 @@ export default function PokemonListScreen() {
   };
 
   const handlePress = (pokemonId: number) => {
-    console.log(`Pokemon with ID: ${pokemonId} clicked`);
+    router.push({ pathname: "/PokemonDetail", params: { id: pokemonId } });
   };
 
   if (loading) {
