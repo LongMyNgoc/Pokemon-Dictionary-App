@@ -21,6 +21,9 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
     const aspectRatio = imageHeight / imageWidth;
     const imageHeightAdjusted = screenWidth * aspectRatio;
 
+    // Tính toán khoảng cách phía trên là 1/5 chiều cao ảnh
+    const paddingTop = imageHeightAdjusted / 5;
+
     return (
         <ImageBackground
             source={require('@/assets/images/Background_Detail.png')}
@@ -37,7 +40,7 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
             </TouchableOpacity>
 
             {/* ID */}
-            <Text style={tw`text-2xl font-bold mb-4 text-center pt-30`}>
+            <Text style={[tw`text-2xl font-bold mb-4 text-center`, { paddingTop }]}>
                 #{pokemon.id}
             </Text>
 
@@ -93,7 +96,6 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
                     <Text style={tw`text-gray-600 font-bold text-base`}>Weight</Text>
                     <Text style={tw`text-lg font-semibold`}>{weight / 10} kg</Text>
                 </View>
-
             </View>
         </ImageBackground>
     );

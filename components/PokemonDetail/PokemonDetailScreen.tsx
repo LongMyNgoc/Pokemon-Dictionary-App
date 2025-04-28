@@ -1,18 +1,19 @@
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import LoadingScreen from "@/components/Loading/LoadingScreen";
 import EmptyState from "@/components/Loading/EmptyState";
-import PokemonDetailCard from "@/components/PokemonCard/PokemonDetailCard"; // Import component mới
+import PokemonDetailCard from "@/components/PokemonCard/PokemonDetailCard"; 
 import PokemonDescription from "./PokemonDescription";
-import useFetchPokemon from "@/hooks/useFetchPokemonDetail";  // Import hook
+import useFetchPokemon from "@/hooks/useFetchPokemonDetail";  
+import StatScreen from "./StatScreen";
 import tw from 'twrnc';
 
 interface PokemonDetailScreenProps {
-  pokemonId: string | undefined;
+  pokemonId: string;
   onGoBack: () => void;
 }
 
 const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, onGoBack }) => {
-  const { pokemon, loading, error } = useFetchPokemon(pokemonId);  // Sử dụng hook fetch
+  const { pokemon, loading, error } = useFetchPokemon(pokemonId); 
 
   if (loading) {
     return <LoadingScreen />;
@@ -24,7 +25,6 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
 
   return (
     <ScrollView contentContainerStyle={tw`flex-grow`}>
-      {/* Sử dụng PokemonDetailCard để hiển thị chi tiết Pokémon */}
       <PokemonDetailCard
         pokemon={pokemon}
         weight={pokemon.weight}
@@ -33,6 +33,8 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
         onGoBack={onGoBack}
       />
       <PokemonDescription description={pokemon.description} />
+
+      <StatScreen stats={pokemon.stats} />
     </ScrollView>
   );
 };
