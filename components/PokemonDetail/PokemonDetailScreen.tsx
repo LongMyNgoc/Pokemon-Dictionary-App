@@ -1,8 +1,8 @@
-// app/screens/PokemonDetailContent.tsx
-import { View } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import LoadingScreen from "@/components/Loading/LoadingScreen";
 import EmptyState from "@/components/Loading/EmptyState";
 import PokemonDetailCard from "@/components/PokemonCard/PokemonDetailCard"; // Import component mới
+import PokemonDescription from "./PokemonDescription";
 import useFetchPokemon from "@/hooks/useFetchPokemonDetail";  // Import hook
 import tw from 'twrnc';
 
@@ -23,13 +23,17 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
   }
 
   return (
-    <View style={tw`flex-1`}>
+    <ScrollView contentContainerStyle={tw`flex-grow`}>
       {/* Sử dụng PokemonDetailCard để hiển thị chi tiết Pokémon */}
       <PokemonDetailCard
         pokemon={pokemon}
+        weight={pokemon.weight}
+        height={pokemon.height}
+        abilities={pokemon.abilities}
         onGoBack={onGoBack}
       />
-    </View>
+      <PokemonDescription description={pokemon.description} />
+    </ScrollView>
   );
 };
 
