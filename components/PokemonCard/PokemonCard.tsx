@@ -20,7 +20,11 @@ function PokemonCard({ pokemon, onPress }: PokemonProps) {
         imageStyle={tw`rounded-lg`} // Đảm bảo ảnh nền có góc bo tròn như card
       >
         <View style={tw`flex-1`}>
-          <Text style={tw`text-lg font-bold text-white`}>
+          <Text
+            style={[tw`text-base font-bold text-white`, { maxWidth: 160 }]} // thêm maxWidth
+            numberOfLines={1} // chỉ cho phép 1 dòng
+            ellipsizeMode="tail" // nếu quá dài thì hiện "..."
+          >
             #{String(pokemon.id)} {capitalize(String(pokemon.name))}
           </Text>
           <View style={tw`flex-row flex-wrap`}>

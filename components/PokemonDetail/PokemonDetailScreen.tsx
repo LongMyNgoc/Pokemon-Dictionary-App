@@ -1,10 +1,14 @@
-import { ScrollView } from "react-native";
-import LoadingScreen from "@/components/Loading/LoadingScreen";
-import EmptyState from "@/components/Loading/EmptyState";
-import PokemonDetailCard from "@/components/PokemonCard/PokemonDetailCard"; 
-import PokemonDescription from "./PokemonDescription";
-import useFetchPokemon from "@/hooks/useFetchPokemonDetail";  
-import StatScreen from "./StatScreen";
+// app/screens/PokemonDetailScreen.tsx
+
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image } from 'react-native';
+import LoadingScreen from '@/components/Loading/LoadingScreen';
+import EmptyState from '@/components/Loading/EmptyState';
+import PokemonDetailCard from '@/components/PokemonCard/PokemonDetailCard';
+import PokemonDescription from './PokemonDescription';
+import useFetchPokemon from '@/hooks/useFetchPokemonDetail';
+import StatScreen from './StatScreen';
+import EvolutionChain from '@/components/PokemonDetail/EvolutionChain'; // Import EvolutionChain
 import tw from 'twrnc';
 
 interface PokemonDetailScreenProps {
@@ -13,7 +17,18 @@ interface PokemonDetailScreenProps {
 }
 
 const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, onGoBack }) => {
-  const { pokemon, loading, error } = useFetchPokemon(pokemonId); 
+  const [currentPokemonId, setCurrentPokemonId] = useState(pokemonId); // State để lưu pokemonId hiện tại
+  const { pokemon, loading, error } = useFetchPokemon(currentPokemonId); // Gọi API với pokemonId hiện tại
+
+  useEffect(() => {
+    // Khi pokemonId thay đổi, chúng ta sẽ gọi lại API
+    setCurrentPokemonId(pokemonId);
+  }, [pokemonId]); // Theo dõi thay đổi pokemonId
+
+  const handleEvolutionPress = (evolutionId: string) => {
+    // Khi nhấn vào tiến hóa, cập nhật pokemonId
+    setCurrentPokemonId(evolutionId);
+  };
 
   if (loading) {
     return <LoadingScreen />;
@@ -33,8 +48,15 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
         onGoBack={onGoBack}
       />
       <PokemonDescription description={pokemon.description} />
-
       <StatScreen stats={pokemon.stats} />
+
+      {/* Hiển thị chuỗi tiến hóa */}
+      {pokemon.evolution_chain.length > 0 && (
+        <EvolutionChain 
+          evolutionChain={pokemon.evolution_chain} 
+          onEvolutionPress={handleEvolutionPress} 
+        />
+      )}
     </ScrollView>
   );
 };

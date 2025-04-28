@@ -40,11 +40,6 @@ export interface Evolution {
     weight: number;
     species: string;
     description: string;
-    habitat: string;
-    shape: string;
-    growth_rate: string;
-    capture_rate: number;
-    base_happiness: number;
     evolution_chain: Evolution[];
     abilities: string[];
     stats: Stats;
