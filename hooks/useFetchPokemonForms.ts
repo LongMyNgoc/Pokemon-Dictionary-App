@@ -3,27 +3,31 @@ import axios from 'axios';
 import { Pokemon } from '@/types/Pokemon';
 
 export function useFetchPokemonForms(name: string) {
-  const [forms, setForms] = useState<Pokemon[]>([]); // KHÔNG dùng null
+  const [forms, setForms] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Hàm refetch để làm mới dữ liệu
-  const refetch = useCallback(async () => {
-    if (!name) return;
+  const normalizeName = (name: string) => {
+    return name.split('-')[0]; // Cắt tên tại dấu "-" và lấy phần đầu tiên
+  };
 
-    setLoading(true); // Đặt lại trạng thái loading trước khi fetch
+  const refetch = useCallback(async () => {
+    const normalizedName = normalizeName(name);
+    if (!normalizedName) return;
+
+    setLoading(true);
     try {
-      const response = await axios.get(`https://pokemon-dictionary-be-production.up.railway.app/pokemon_form_by_name/${name}`);
+      const response = await axios.get(`https://pokemon-dictionary-be-production.up.railway.app/pokemon_form_by_name/${normalizedName}`);
       setForms(response.data);
     } catch (error) {
-      setForms([]); // Nếu không có form thì trả về mảng rỗng
+      setForms([]);
     } finally {
       setLoading(false);
     }
-  }, [name]); // Hàm refetch phụ thuộc vào `name`
+  }, [name]);
 
   useEffect(() => {
-    refetch(); // Khi `name` thay đổi, gọi lại `refetch` để tải lại dữ liệu
-  }, [name, refetch]); // Hook sẽ chạy khi `name` thay đổi
+    refetch();
+  }, [name, refetch]);
 
   return { forms, loading, refetch };
 }
