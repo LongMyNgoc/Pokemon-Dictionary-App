@@ -15,6 +15,7 @@ interface PokemonDetailCardProps {
 }
 
 const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, height, abilities, onGoBack }) => {
+    const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
     const screenWidth = Dimensions.get('window').width;
     const imageWidth = 1024;
     const imageHeight = 2020;
@@ -23,6 +24,15 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
 
     // Tính toán khoảng cách phía trên là 1/5 chiều cao ảnh
     const paddingTop = imageHeightAdjusted / 5;
+
+    React.useEffect(() => {
+        if (pokemon.image_url) {
+            Image.getSize(pokemon.image_url, (width, height) => {
+                setImageAspectRatio(width / height);
+            });
+        }
+    }, [pokemon.image_url]);
+
 
     return (
         <ImageBackground
@@ -49,10 +59,13 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
                 {capitalize(pokemon.name)}
             </Text>
 
-            {/* Hình Pokémon */}
             <Image
                 source={{ uri: pokemon.image_url }}
-                style={tw`w-40 h-40 mb-4 self-center`}
+                style={{
+                    width: '50%',
+                    aspectRatio: imageAspectRatio,
+                    alignSelf: 'center',
+                }}
                 resizeMode="contain"
             />
 
