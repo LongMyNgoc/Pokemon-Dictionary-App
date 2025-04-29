@@ -10,7 +10,12 @@ const useFetchPokemon = (id: string | undefined) => {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`https://pokemon-dictionary-be-production.up.railway.app/pokemon/${id}`)
+      const numericId = Number(id);
+      const url = numericId > 10000
+        ? `https://pokemon-dictionary-be-production.up.railway.app/pokemon_form/${id}` 
+        : `https://pokemon-dictionary-be-production.up.railway.app/pokemon/${id}`;
+
+      fetch(url)
         .then((response) => response.json())
         .then((data: PokemonDetail) => {  // Đảm bảo dữ liệu trả về khớp với kiểu PokemonDetail
           setPokemon(data);

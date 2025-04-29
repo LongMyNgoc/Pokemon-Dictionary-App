@@ -20,12 +20,17 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
   const [currentPokemonId, setCurrentPokemonId] = useState(pokemonId); // State để lưu pokemonId hiện tại
   const { pokemon, loading, error } = useFetchPokemon(currentPokemonId); // Gọi API với pokemonId hiện tại
   const [currentPokemonName, setCurrentPokemonName] = useState<string>(''); // Lưu name của pokemon
-  const { forms, loading: formsLoading } = useFetchPokemonForms(currentPokemonName); // Gọi API forms dựa trên currentPokemonName
+  const { forms, loading: formsLoading, refetch: refetchForms } = useFetchPokemonForms(currentPokemonName); // Gọi API forms dựa trên currentPokemonName
 
   useEffect(() => {
     // Khi pokemonId thay đổi, cập nhật lại currentPokemonId và currentPokemonName
     setCurrentPokemonId(pokemonId);
   }, [pokemonId]);
+
+  useEffect(() => {
+    // Khi pokemonId thay đổi, reset forms loading lại về true
+    refetchForms(); // Gọi lại hàm refetch để tải lại forms
+  }, [pokemonId, refetchForms]);
 
   useEffect(() => {
     // Khi pokemon thay đổi (dữ liệu từ useFetchPokemon), cập nhật currentPokemonName
@@ -37,6 +42,11 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
   const handleEvolutionPress = (evolutionId: string) => {
     // Khi nhấn vào tiến hóa, cập nhật pokemonId
     setCurrentPokemonId(evolutionId);
+  };
+
+  const handleFormPress = (FormId: string) => {
+    // Khi nhấn vào tiến hóa, cập nhật pokemonId
+    setCurrentPokemonId(FormId);
   };
 
   if (loading) {
@@ -68,7 +78,7 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
       )}
 
       {/* Hiển thị Pokemon Forms */}
-      <PokemonForms forms={forms} isLoading={formsLoading} />
+      <PokemonForms forms={forms} isLoading={formsLoading} onPress={handleFormPress}/>
     </ScrollView>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, ImageBackground, Text, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { Pokemon } from '@/types/Pokemon'; // Đảm bảo kiểu Pokemon
 import { getTypeColor } from '@/utils/typeColors'; // Hàm lấy màu theo loại
 import { capitalize } from '@/utils/Capitalize'; // Hàm viết hoa đầu chữ
@@ -7,9 +7,10 @@ import tw from 'twrnc';
 
 interface PokemonFormCardProps {
   form: Pokemon; // Dữ liệu của Pokemon form
+  onPressCard: (id: string) => void;
 }
 
-const PokemonFormCard: React.FC<PokemonFormCardProps> = ({ form }) => {
+const PokemonFormCard: React.FC<PokemonFormCardProps> = ({ form, onPressCard }) => {
   const [bgAspectRatio, setBgAspectRatio] = useState<number>(1); // Tỉ lệ ảnh nền
   const [imageAspectRatio, setImageAspectRatio] = useState(1);
 
@@ -33,6 +34,7 @@ const PokemonFormCard: React.FC<PokemonFormCardProps> = ({ form }) => {
   const backgroundHeight = backgroundWidth / bgAspectRatio; // Tính chiều cao từ tỉ lệ
 
   return (
+    <TouchableOpacity onPress={() => onPressCard(form.id.toString())}>
     <View style={tw`items-center mb-6`}>
       <ImageBackground
         source={require('@/assets/images/Background_EvolutionCard.png')} // Hình nền
@@ -82,6 +84,7 @@ const PokemonFormCard: React.FC<PokemonFormCardProps> = ({ form }) => {
         </View>
       </ImageBackground>
     </View>
+    </TouchableOpacity>
   );
 };
 
