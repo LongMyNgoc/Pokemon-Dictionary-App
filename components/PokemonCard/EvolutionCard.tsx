@@ -78,27 +78,26 @@ const EvolutionCard: React.FC<EvolutionCardProps> = ({ evolution, onPress }) => 
             alignItems: 'center',
           }}
         >
-          <View style={tw`justify-center items-center mb-4`}>
+          <View style={tw`justify-center items-center`}>
             <Image
               source={{ uri: evolution.image_url }}
-              style={[
-                {
-                  width: '50%',        // rộng 50% container
-                  aspectRatio: imageAspectRatio,      // chiều cao tự động theo tỉ lệ 1:1 (nếu bạn muốn hình vuông)
-                }
-              ]}
+              style={{
+                width: '50%',
+                aspectRatio: imageAspectRatio,
+              }}
             />
+            <Text style={tw`text-xl font-bold text-white text-center`}>
+              {capitalize(evolution.name)}
+            </Text>
           </View>
 
           <Text
             style={[
               tw`text-xl font-bold text-white`,
-              { position: 'absolute', top: 10, left: 10, maxWidth: backgroundWidth * 0.5 },
+              { position: 'absolute', top: 10, left: 10 },
             ]}
-            numberOfLines={1} // Giới hạn chỉ 1 dòng
-            ellipsizeMode="tail" // Nếu vượt quá sẽ hiện "..."
           >
-            {capitalize(evolution.name)}
+            #{capitalize(evolution.id)}
           </Text>
 
           <View style={[tw`flex-row`, { position: 'absolute', top: 10, right: 10 }]}>

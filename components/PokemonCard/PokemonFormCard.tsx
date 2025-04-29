@@ -35,55 +35,54 @@ const PokemonFormCard: React.FC<PokemonFormCardProps> = ({ form, onPressCard }) 
 
   return (
     <TouchableOpacity onPress={() => onPressCard(form.id.toString())}>
-    <View style={tw`items-center mb-6`}>
-      <ImageBackground
-        source={require('@/assets/images/Background_EvolutionCard.png')} // Hình nền
-        style={{
-          width: backgroundWidth,
-          height: backgroundHeight,
-          justifyContent: 'center',
-          alignItems: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        <View style={tw`justify-center items-center mb-4`}>
-          <Image
-            source={{ uri: form.image_url }}
-            style={[
-              {
-                width: '50%', // Chiếm 50% chiều rộng container
-                aspectRatio: imageAspectRatio, // Tỉ lệ ảnh
-              },
-            ]}
-          />
-        </View>
-
-        <Text
-          style={[
-            tw`text-xl font-bold text-white`,
-            { position: 'absolute', top: 10, left: 10, maxWidth: backgroundWidth * 0.5 },
-          ]}
-          numberOfLines={1} // Giới hạn chỉ 1 dòng
-          ellipsizeMode="tail" // Nếu tên dài quá, hiện dấu "..."
+      <View style={tw`items-center mb-6`}>
+        <ImageBackground
+          source={require('@/assets/images/Background_EvolutionCard.png')} // Hình nền
+          style={{
+            width: backgroundWidth,
+            height: backgroundHeight,
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+          }}
         >
-          {capitalize(form.name)}
-        </Text>
+          <View style={tw`justify-center items-center`}>
+            <Image
+              source={{ uri: form.image_url }}
+              style={{
+                width: '50%',
+                aspectRatio: imageAspectRatio,
+              }}
+            />
+            <Text style={tw`text-xl font-bold text-white text-center`}>
+              {capitalize(form.name)}
+            </Text>
+          </View>
 
-        <View style={[tw`flex-row`, { position: 'absolute', top: 10, right: 10 }]}>
-          {form.types.map((type, index) => (
-            <View
-              key={index}
-              style={[
-                tw`px-2 py-1 rounded-full mr-2`,
-                { backgroundColor: getTypeColor(type) }, // Màu sắc loại Pokemon
-              ]}
-            >
-              <Text style={tw`text-white text-sm font-bold`}>{capitalize(type)}</Text>
-            </View>
-          ))}
-        </View>
-      </ImageBackground>
-    </View>
+          <Text
+            style={[
+              tw`text-xl font-bold text-white`,
+              { position: 'absolute', top: 10, left: 10 },
+            ]}
+          >
+            #{capitalize(form.id.toString())}
+          </Text>
+
+          <View style={[tw`flex-row`, { position: 'absolute', top: 10, right: 10 }]}>
+            {form.types.map((type, index) => (
+              <View
+                key={index}
+                style={[
+                  tw`px-2 py-1 rounded-full mr-2`,
+                  { backgroundColor: getTypeColor(type) }, // Màu sắc loại Pokemon
+                ]}
+              >
+                <Text style={tw`text-white text-sm font-bold`}>{capitalize(type)}</Text>
+              </View>
+            ))}
+          </View>
+        </ImageBackground>
+      </View>
     </TouchableOpacity>
   );
 };
