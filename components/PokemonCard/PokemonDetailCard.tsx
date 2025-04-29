@@ -101,4 +101,4 @@ const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, weight, 
     );
 };
 
-export default PokemonDetailCard;
+export default React.memo(PokemonDetailCard);

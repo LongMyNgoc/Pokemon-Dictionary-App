@@ -1,6 +1,7 @@
 import { View, Text, ImageBackground, Image } from "react-native";
 import React from "react";
 import tw from "twrnc";
+import TitleWithPokeballs from "../Title/TitleWithPokeballs";
 
 interface PokemonDescriptionProps {
   description: string;
@@ -24,7 +25,7 @@ const PokemonDescription: React.FC<PokemonDescriptionProps> = ({ description }) 
               style={tw`w-6 h-6 mr-2`} // width-height 24px, margin phải 8px
               resizeMode="contain"
             />
-            <Text style={tw`text-2xl font-semibold text-gray-800 text-center mr-2`}>
+            <Text style={tw`text-2xl font-semibold text-orange-400 text-center mr-2`}>
               Description
             </Text>
             <Image
