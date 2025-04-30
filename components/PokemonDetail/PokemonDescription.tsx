@@ -1,7 +1,6 @@
 import { View, Text, ImageBackground, Image } from "react-native";
 import React from "react";
 import tw from "twrnc";
-import TitleWithPokeballs from "../Title/TitleWithPokeballs";
 
 interface PokemonDescriptionProps {
   description: string;

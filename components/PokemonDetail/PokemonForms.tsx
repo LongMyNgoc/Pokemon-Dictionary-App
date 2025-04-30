@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import tw from 'twrnc';
 import { Pokemon } from '@/types/Pokemon'; // Đảm bảo kiểu Pokemon
 import PokemonFormCard from '@/components/PokemonCard/PokemonFormCard'; // Import component PokemonFormCard

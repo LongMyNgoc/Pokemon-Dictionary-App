@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import LoadingScreen from '@/components/Loading/LoadingScreen';
 import EmptyState from '@/components/Loading/EmptyState';
 import PokemonDetailCard from '@/components/PokemonCard/PokemonDetailCard';

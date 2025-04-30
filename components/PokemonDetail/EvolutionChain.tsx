@@ -1,7 +1,7 @@
 // app/components/PokemonCard/EvolutionChain.tsx
 
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View } from 'react-native';
 import EvolutionCard from '@/components/PokemonCard/EvolutionCard'; // Import EvolutionCard
 import tw from 'twrnc';
 import { Evolution } from '@/types/PokemonDetail';
