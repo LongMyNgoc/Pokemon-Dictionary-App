@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchText, setSearchText }) => {
     <View style={tw`px-4 pt-4`}>
       <View style={tw`flex-row items-center bg-white rounded-full px-4 shadow-md`}>
         <TextInput
-          style={tw`flex-1 text-sm text-gray-700`}
+          style={tw`flex-1 text-sm text-gray-700 p-2`}
           placeholder="🔍 Search Pokémon..."
           placeholderTextColor="#9CA3AF"
           value={searchText}
