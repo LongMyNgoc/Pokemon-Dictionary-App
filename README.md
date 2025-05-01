@@ -61,6 +61,10 @@ Sau khi lệnh trên chạy, bạn có thể mở ứng dụng trong Expo Go tr�
 - **Back-End (Railway)**: https://pokemon-dictionary-be-production.up.railway.app/
 - **Front-End (GitHub)**: https://github.com/LongMyNgoc/Pokemon-Dictionary-App.git
 
+## Demo
+- Video Youtube: https://youtu.be/uoEZRN--LCs
+- File APK: https://expo.dev/accounts/longmyngoc/projects/Pokedex/builds/6c5899ff-281e-4fe3-825f-44dbca899feb
+
 ## Đóng góp & Phát triển
 Chúng tôi luôn chào đón sự đóng góp từ cộng đồng! Nếu bạn có bất kỳ ý tưởng, cải tiến hoặc báo lỗi nào, vui lòng gửi qua hệ thống quản lý mã nguồn của dự án. Bạn cũng có thể liên hệ trực tiếp với nhóm phát triển để thảo luận thêm.
 

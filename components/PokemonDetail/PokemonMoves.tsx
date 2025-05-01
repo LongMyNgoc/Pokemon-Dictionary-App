@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { PokemonMove } from '@/types/PokemonMove';
 import tw from 'twrnc';
+import TitleWithPokeballs from '../Title/TitleWithPokeballs';
+import LoadingScreen from '../Loading/LoadingScreen';
+import EmptyState from '../Loading/EmptyState';
+import { getTypeColor } from '@/utils/typeColors';
 
 interface MoveListProps {
   moves: PokemonMove[];
@@ -10,22 +14,44 @@ interface MoveListProps {
 
 const MoveList: React.FC<MoveListProps> = ({ moves, isLoading }) => {
   if (isLoading) {
-    return <Text style={tw`text-center text-gray-500 my-4`}>Loading moves...</Text>;
+    return <LoadingScreen />;
   }
 
   if (!moves || moves.length === 0) {
-    return <Text style={tw`text-center text-gray-500 my-4`}>No moves available.</Text>;
+    return <EmptyState />;
   }
 
   return (
     <View style={tw`p-4`}>
-      <Text style={tw`text-lg font-bold mb-2`}>Moves</Text>
+      <TitleWithPokeballs title="Moves" />
+
+      {/* Header of the table */}
+      <View style={tw`flex-row mb-2 border-b border-gray-300`}>
+        <Text style={tw`flex-1 font-bold text-sm text-center p-2 border-r border-gray-300`}>Move</Text>
+        <Text style={tw`flex-1 font-bold text-sm text-center p-2 border-r border-gray-300`}>Power</Text>
+        <Text style={tw`flex-1 font-bold text-sm text-center p-2 border-r border-gray-300`}>Accuracy</Text>
+        <Text style={tw`flex-1 font-bold text-sm text-center p-2`}>Type</Text>
+      </View>
+
+      {/* Table rows */}
       {moves.map((item) => (
-        <View key={item.move} style={tw`mb-2 p-3 bg-gray-100 rounded-lg`}>
-          <Text style={tw`text-base font-semibold capitalize`}>{item.move}</Text>
-          <Text style={tw`text-sm`}>Power: {item.power ?? '—'}</Text>
-          <Text style={tw`text-sm`}>Accuracy: {item.accuracy ?? '—'}</Text>
-          <Text style={tw`text-sm`}>Type: {item.type.name}</Text>
+        <View
+          key={item.move}
+          style={tw`flex-row mb-2 p-3 bg-gray-100 rounded-lg border-b border-gray-200`}
+        >
+          <Text style={tw`flex-1 text-sm text-center p-2 border-r border-gray-300`}>{item.move}</Text>
+          <Text style={tw`flex-1 text-sm text-center p-2 border-r border-gray-300`}>{item.power ?? '—'}</Text>
+          <Text style={tw`flex-1 text-sm text-center p-2 border-r border-gray-300`}>{item.accuracy ?? '—'}</Text>
+
+          {/* Type with background color */}
+          <View
+            style={[
+              tw`flex-1 text-sm text-center p-2 rounded`,
+              { backgroundColor: getTypeColor(item.type.name.toLowerCase()) },
+            ]}
+          >
+            <Text style={tw`text-white`}>{item.type.name}</Text>
+          </View>
         </View>
       ))}
     </View>
