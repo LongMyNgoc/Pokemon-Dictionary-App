@@ -1,4 +1,14 @@
 # Pokémon Dictionary
+<p align="center">
+  <img src="assets/Home.png" alt="Home" width="200" style="display: inline-block;">
+  <img src="assets/PokemonDetailCard.png" alt="PokemonDetailCard" width="200" style="display: inline-block;">
+  <img src="assets/DescriptionStats.png" alt="DescriptionStats" width="200" style="display: inline-block;">
+</p>
+<p align="center">
+  <img src="assets/EvolutionChain.png" alt="EvolutionChain" width="200" style="display: inline-block;">
+  <img src="assets/EvolutionCard.png" alt="EvolutionCard" width="200" style="display: inline-block;">
+  <img src="assets/Form.png" alt="Form" width="200" style="display: inline-block;">
+</p>
 
 **Pokémon Dictionary** là một ứng dụng di động giúp người dùng tìm kiếm và xem thông tin chi tiết về các Pokémon, bao gồm tên, loại, hình ảnh và nhiều thông tin thú vị khác.
 

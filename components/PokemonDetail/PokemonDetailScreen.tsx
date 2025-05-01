@@ -6,9 +6,11 @@ import PokemonDetailCard from '@/components/PokemonCard/PokemonDetailCard';
 import PokemonDescription from './PokemonDescription';
 import useFetchPokemon from '@/hooks/useFetchPokemonDetail';
 import { useFetchPokemonForms } from '@/hooks/useFetchPokemonForms';
+import useFetchPokemonMoves from '@/hooks/useFetchPokemonMove';
 import StatScreen from './StatScreen';
 import EvolutionChain from '@/components/PokemonDetail/EvolutionChain'; // Import EvolutionChain
 import PokemonForms from '@/components/PokemonDetail/PokemonForms'; // Import new component
+import MoveList from './PokemonMoves';
 import tw from 'twrnc';
 
 interface PokemonDetailScreenProps {
@@ -20,7 +22,8 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
   const [currentPokemonId, setCurrentPokemonId] = useState(pokemonId); // State để lưu pokemonId hiện tại
   const { pokemon, loading, error } = useFetchPokemon(currentPokemonId); // Gọi API với pokemonId hiện tại
   const [currentPokemonName, setCurrentPokemonName] = useState<string>(''); // Lưu name của pokemon
-  const { forms, loading: formsLoading, refetch: refetchForms } = useFetchPokemonForms(currentPokemonName); // Gọi API forms dựa trên currentPokemonName
+  const { forms, loading: formsLoading, refetch: refetchForms } = useFetchPokemonForms(currentPokemonName);
+  const { moves, loading: movesLoading } = useFetchPokemonMoves(currentPokemonId);
 
   useEffect(() => {
     // Khi pokemonId thay đổi, cập nhật lại currentPokemonId và currentPokemonName
@@ -79,6 +82,8 @@ const PokemonDetailScreen: React.FC<PokemonDetailScreenProps> = ({ pokemonId, on
 
       {/* Hiển thị Pokemon Forms */}
       <PokemonForms forms={forms} isLoading={formsLoading} onPress={handleFormPress}/>
+      <MoveList moves={moves} isLoading={movesLoading} />
+
     </ScrollView>
   );
 };

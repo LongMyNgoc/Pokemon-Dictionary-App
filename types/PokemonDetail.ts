@@ -43,6 +43,5 @@ export interface Evolution {
     evolution_chain: Evolution[];
     abilities: string[];
     stats: Stats;
-    moves: string[];
   }
   
